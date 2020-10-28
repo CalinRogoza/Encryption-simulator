@@ -114,6 +114,11 @@ try:
     IV1 = aes.decrypt(enc_IV1)
     print(IV1)
 
+    confirm = "A: Putem incepe."
+    aes = AES.new(K1, AES.MODE_CBC, IV1)
+    confirm = aes.encrypt(bytes(confirm, "utf-8"))
+    client_socket.send(confirm)
+
     f = open("fisier.txt", "r")
     f = f.read()
 

@@ -22,6 +22,12 @@ try:
         IV2 = aes.decrypt(enc_IV2)
         print(K2)
         print(IV2)
+
+        confirm = "B: Putem incepe."
+        aes = AES.new(K2, AES.MODE_CBC, IV2)
+        confirm = aes.encrypt(bytes(confirm, "utf-8"))
+        client_socket.send(confirm)
+
     # message = input("Send a character to the server:")
     # client_socket.send(bytes(message, "utf-8"))
 except KeyboardInterrupt:

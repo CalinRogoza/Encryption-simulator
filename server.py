@@ -209,15 +209,6 @@ while True:
         client_socket_A.send(enc_K1)
         client_socket_A.send(enc_IV1)
 
-        codeblocks_number = client_socket_A.recv(1024)
-        print(codeblocks_number.decode("utf-8"))
-        codeblocks_list = []
-        for c in range(int(codeblocks_number.decode("utf-8"))):
-            data = client_socket_A.recv(16)
-            print(data)
-            codeblocks_list.append(data)
-        print(decrypt_cbc(codeblocks_list, K1, IV1))
-
         client_socket_B.send(bytes("CFB", "utf-8"))
         print(client_socket_B.recv(1024).decode("utf-8"))  # mesaj de confirmare de la B
 
@@ -229,6 +220,27 @@ while True:
 
         client_socket_B.send(enc_K2)
         client_socket_B.send(enc_IV2)
+
+        data = client_socket_A.recv(1024)
+        aes = AES.new(K1, AES.MODE_CBC, IV1.encode("utf-8"))
+        data = aes.decrypt(data)
+        print(data.decode("utf-8"))  # mesajele de confirmare criptate de la A si B
+
+        data = client_socket_B.recv(1024)
+        aes = AES.new(K2, AES.MODE_CBC, IV2.encode("utf-8"))
+        data = aes.decrypt(data)
+        print(data.decode("utf-8"))
+
+        codeblocks_number = client_socket_A.recv(1024)
+        print(codeblocks_number.decode("utf-8"))
+        codeblocks_list = []
+        for c in range(int(codeblocks_number.decode("utf-8"))):
+            data = client_socket_A.recv(16)
+            print(data)
+            codeblocks_list.append(data)
+        print(decrypt_cbc(codeblocks_list, K1, IV1))
+
+
     elif data.decode("utf-8") == "CFB":
         print("CFB!!!")
 
