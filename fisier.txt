@@ -1,1 +1,1 @@
-qwertyuiopasdfg 11ertyuiopasdgh a
+Modul de operare al algoritmului (CBC, CFB, OFB) trebuie implementat explicit.

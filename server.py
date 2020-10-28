@@ -79,7 +79,7 @@ def decrypt_cfb(cipher_list, key, vector):
     for i in range(len(cipher_list)):
         if type(vector) == str:  # primul caz, in care vector este str
             vector = bytes(vector.encode("utf-8"))
-        aes = AES.new(key, AES.MODE_CFB, vector)  # !!!!!!verifica aici cheie!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        aes = AES.new(key, AES.MODE_CFB, vector)
         if i == 0:
             decrypted_message = aes.encrypt(vector)
             print("DECR1   ", decrypted_message)
@@ -106,8 +106,9 @@ def decrypt_cfb(cipher_list, key, vector):
     return message_list
 
 
-
 def encrypt_plaintext_cfb(plaintext, key, vector):
+    print("ALL ", plaintext)
+    print(len(plaintext))
     codeblock_list = []
     ok = 1
     i = 0
@@ -134,6 +135,7 @@ def encrypt_plaintext_cfb(plaintext, key, vector):
             enc_message = aes.encrypt(xor_vector)
             enc_message = apply_xor(enc_message, message_block)
             codeblock_list.append(enc_message)
+            print(enc_message)
             xor_vector = enc_message
         # send enc_message!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         i = j
@@ -178,14 +180,6 @@ def encrypt_plaintext_cbc(plaintext, key, vector):
             j = len(plaintext)  # pentru ultimul bloc de mesaj
     return codeblock_list
 
-
-abc = "1"
-print(len(abc))
-lista = encrypt_plaintext_cfb(abc, K1, IV1)
-print(lista)
-print(decrypt_cfb(lista, K1, IV1))
-# print(decrypt_cbc(lista, K1, IV1))
-# encrypt_plaintext_cbc(abc, K1, IV1)
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_socket.bind(('127.0.0.1', 12345))
@@ -238,12 +232,81 @@ while True:
             data = client_socket_A.recv(16)
             print(data)
             codeblocks_list.append(data)
-        print(decrypt_cbc(codeblocks_list, K1, IV1))
+        decrypted_from_A = decrypt_cbc(codeblocks_list, K1, IV1)
+        print("DECRIPTAT A: ", decrypted_from_A)
+        encrypted_for_B = ""
+        for d in decrypted_from_A:
+            encrypted_for_B += d
+        print(encrypted_for_B)  # il fac din lista string
 
+        # urmeaza sa criptam ce am primit de la A si sa trimitem la B:
+        encrypted_for_B = encrypt_plaintext_cfb(encrypted_for_B, K2, IV2)
+        print("LLLLLLLLL", encrypted_for_B)
+        client_socket_B.send(bytes(str(len(encrypted_for_B)), "utf-8"))  # trimitem numarul de mesaje catre B
+        for e in encrypted_for_B:
+            print(e)
+            client_socket_B.send(e)
+
+        print(client_socket_B.recv(1024))
+        client_socket_A.send(bytes("KM: Criptarea s-a incheiat!", "utf-8"))
 
     elif data.decode("utf-8") == "CFB":
         print("CFB!!!")
+        aes = AES.new(K3, AES.MODE_CBC, IV_initial)
+        enc_K1 = aes.encrypt(K1)
 
+        aes = AES.new(K3, AES.MODE_CBC, IV_initial)
+        enc_IV1 = aes.encrypt(IV1.encode("utf-8"))
+
+        client_socket_A.send(enc_K1)
+        client_socket_A.send(enc_IV1)
+
+        client_socket_B.send(bytes("CBC", "utf-8"))
+        print(client_socket_B.recv(1024).decode("utf-8"))  # mesaj de confirmare de la B
+
+        aes = AES.new(K3, AES.MODE_CBC, IV_initial)
+        enc_K2 = aes.encrypt(K2)
+
+        aes = AES.new(K3, AES.MODE_CBC, IV_initial)
+        enc_IV2 = aes.encrypt(IV2.encode("utf-8"))
+
+        client_socket_B.send(enc_K2)
+        client_socket_B.send(enc_IV2)
+
+        data = client_socket_A.recv(1024)
+        aes = AES.new(K1, AES.MODE_CBC, IV1.encode("utf-8"))
+        data = aes.decrypt(data)
+        print(data.decode("utf-8"))  # mesajele de confirmare criptate de la A si B
+
+        data = client_socket_B.recv(1024)
+        aes = AES.new(K2, AES.MODE_CBC, IV2.encode("utf-8"))
+        data = aes.decrypt(data)
+        print(data.decode("utf-8"))
+
+        codeblocks_number = client_socket_A.recv(1024)
+        print(codeblocks_number.decode("utf-8"))
+        codeblocks_list = []
+        for c in range(int(codeblocks_number.decode("utf-8"))):
+            data = client_socket_A.recv(16)
+            print(data)
+            codeblocks_list.append(data)
+        decrypted_from_A = decrypt_cfb(codeblocks_list, K1, IV1)
+        print("DECRIPTAT A: ", decrypted_from_A)
+        encrypted_for_B = ""
+        for d in decrypted_from_A:
+            encrypted_for_B += d
+        print(encrypted_for_B)  # il fac din lista string
+
+        # urmeaza sa criptam ce am primit de la A si sa trimitem la B:
+        encrypted_for_B = encrypt_plaintext_cbc(encrypted_for_B, K2, IV2)
+        print("LLLLLLLLL", encrypted_for_B)
+        client_socket_B.send(bytes(str(len(encrypted_for_B)), "utf-8"))  # trimitem numarul de mesaje catre B
+        for e in encrypted_for_B:
+            print(e)
+            client_socket_B.send(e)
+
+        print(client_socket_B.recv(1024))
+        client_socket_A.send(bytes("KM: Criptarea s-a incheiat!", "utf-8"))
 
 # except:
 #     print("Exited by user")
