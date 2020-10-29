@@ -1,12 +1,12 @@
 # Tema1-SI
-## Descrierea aplicatiei
-  Aceasta aplicatie are rolul de a simula o infrastructura de de comunicatie ce utilizeaza criptosistemul AES. Are o arhitectura de tipul client-server, serverul fiind numit "Key Manager" si are scopul de a comunica cu nodurile A si B, iar clientii sunt doua noduri (A si B) care vor avea rolul de a cripta un fisier text intr-un mod ales (CBC/CFB), respectiv de a decripta in celalalt mod si afisa pe ecran mesajul initial.</br>
-  Diagrama aplicatiei:</br></br>
+## Descrierea aplicației
+  Această aplicație are rolul de a simula o infrastructură de comunicație ce utilizează criptosistemul AES. Are o arhitectură de tipul client-server, serverul fiind numit "Key Manager" și are scopul de a comunica cu nodurile A și B, iar clienții sunt două noduri (A și B) care vor avea rolul de a cripta un fișier text într-un mod ales (CBC/CFB), respectiv de a decripta în celălalt mod și afișa pe ecran mesajul inițial.</br>
+  Diagrama aplicației:</br></br>
   <img align="center" src="diagrama.png">
 </br></br>
 
-## Implementarea criptarii
-  Pentru criptarea mesajelor au fost folositi algoritmii CBC si CFB. Acesti algoritmi au fost implementati dupa schemele de mai jos, impartind mesajele in blocuri de cate 16 octeti, aplicand operatia xor si criptarea cu cheia si vectorul de initializare corespunzatoare:</br>
+## Implementarea criptării
+  Pentru criptarea mesajelor au fost folosiți algoritmii CBC și CFB. Acești algoritmi au fost implementați după schemele de mai jos, împărțind mesajele în blocuri de câte 16 octeți, aplicând operația xor și criptarea cu cheia și vectorul de inițializare corespunzătoare:</br>
 <img align="center" width="410px" height="350px" src="cbc.png">
 <img align="center" width="410px" height="350px" src="cfb.png">
 </br>
