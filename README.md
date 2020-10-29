@@ -10,4 +10,8 @@
 <img align="center" width="410px" height="350px" src="cbc.png">
 <img align="center" width="410px" height="350px" src="cfb.png">
 </br>
-## Inainte de a porni aplicatia
+</br>
+## Cerințe preliminare
+  Pentru a putea folosi aplicația trebuie să:
+  -alo
+  -saa
