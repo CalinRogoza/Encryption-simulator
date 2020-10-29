@@ -1,3 +1,4 @@
 # Tema1-SI
-### Descrierea aplicatiei
+## Descrierea aplicatiei
+  ACeasta
 <div style="text-align:center"><img src="diagrama.png"></div>
