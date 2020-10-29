@@ -24,7 +24,7 @@
   - socket: pentru comunicarea dintre clienți și server
   - random: pentru generarea de chei sau vectori de inițializare random
   - Crypto.Cipher: pentru a folosi algoritmii de criptare/decriptare puși la dispoziție de limbajul de programare Python
-</br>
+
 ## Link-uri utile
   1. https://www.novixys.com/blog/using-aes-encryption-decryption-python-pycrypto/
   2. https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation
