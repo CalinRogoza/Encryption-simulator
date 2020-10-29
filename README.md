@@ -20,4 +20,9 @@
     
   Acum puteți lansa aplicația. Rulați în această ordine: **server.py, client_A.py, client_B.py.** Pentru a modifica textul ce se dorește a fi criptat și decriptat, editați fișierul **fisier.txt**.
 <br/>
-##Librării folosite
+## Librării folosite
+  - socket: pentru comunicarea dintre clienți și server
+  - random: pentru generarea de chei sau vectori de inițializare random
+  - Crypto.Cipher: pentru a folosi algoritmii de criptare/decriptare puși la dispoziție de limbajul de programare Python
+</br>
+## Link-uri utile
