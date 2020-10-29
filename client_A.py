@@ -96,7 +96,6 @@ def encrypt_plaintext_cfb(plaintext, key, vector):
 
 
 try:
-
     message = input("SEND ENCRYPTION MODE: ")
     client_socket.send(bytes(message, "utf-8"))
 
@@ -106,11 +105,9 @@ try:
 
         aes = AES.new(K3, AES.MODE_CBC, IV_initial.encode("utf-8"))
         K1 = aes.decrypt(enc_K1)
-        print(K1)
 
         aes = AES.new(K3, AES.MODE_CBC, IV_initial.encode("utf-8"))
         IV1 = aes.decrypt(enc_IV1)
-        print(IV1)
 
         confirm = "A: Putem incepe."
         aes = AES.new(K1, AES.MODE_CBC, IV1)
@@ -119,11 +116,11 @@ try:
 
         f = open("fisier.txt", "r")
         f = f.read()
+        print("Mesajul de criptat: ", f)
 
         message = encrypt_plaintext_cbc(f, K1, IV1)
         client_socket.send(bytes(str(len(message)), "utf-8"))
         for m in message:
-            print(m)
             client_socket.send(bytes(m))
 
         print(client_socket.recv(1024).decode("utf-8"))
@@ -134,11 +131,9 @@ try:
 
         aes = AES.new(K3, AES.MODE_CBC, IV_initial.encode("utf-8"))
         K1 = aes.decrypt(enc_K1)
-        print(K1)
 
         aes = AES.new(K3, AES.MODE_CBC, IV_initial.encode("utf-8"))
         IV1 = aes.decrypt(enc_IV1)
-        print(IV1)
 
         confirm = "A: Putem incepe."
         aes = AES.new(K1, AES.MODE_CBC, IV1)
@@ -147,11 +142,11 @@ try:
 
         f = open("fisier.txt", "r")
         f = f.read()
+        print("Mesajul de criptat: ", f)
 
         message = encrypt_plaintext_cfb(f, K1, IV1)
         client_socket.send(bytes(str(len(message)), "utf-8"))
         for m in message:
-            print(m)
             client_socket.send(bytes(m))
 
         print(client_socket.recv(1024).decode("utf-8"))
@@ -160,6 +155,6 @@ try:
     # print("Received from server:", data)
     # message = input("Send a character to the server:")
     # client_socket.send(bytes(message, "utf-8"))
-except KeyboardInterrupt:
-    print("Exited by user.")
+except Exception:
+    print("Something went wrong. Try again!")
 client_socket.close()

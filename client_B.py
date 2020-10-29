@@ -67,8 +67,8 @@ IV_initial = "0123456789012345"
 try:
     data = client_socket.recv(1024).decode("utf-8")
     if data == "CFB":
-        print("Received from server: ", data)
-        client_socket.send(bytes("B: Am primit CFB.", "utf-8"))
+        print("Received from server(KM): ", data)
+        client_socket.send(bytes("B: Voi opera in modul CFB.", "utf-8"))
 
         enc_K2 = client_socket.recv(1024)
         enc_IV2 = client_socket.recv(1024)
@@ -90,13 +90,14 @@ try:
             message = client_socket.recv(16)
             codeblocks_list.append(message)
 
+        print("Mesajul decriptat(afisat ca string sau lista):")
         print(decrypt_cfb(codeblocks_list, K2, IV2))
 
         client_socket.send(bytes("B: Am decriptat!", "utf-8"))
     elif data == "CBC":
-        print("Received from server: ", data)
+        print("Received from server(KM): ", data)
 
-        client_socket.send(bytes("B: Am primit CBC.", "utf-8"))
+        client_socket.send(bytes("B: Voi opera in modul CBC.", "utf-8"))
 
         enc_K2 = client_socket.recv(1024)
         enc_IV2 = client_socket.recv(1024)
@@ -118,9 +119,10 @@ try:
             message = client_socket.recv(16)
             codeblocks_list.append(message)
 
+        print("Mesajul decriptat(afisat ca string sau lista):")
         print(decrypt_cbc(codeblocks_list, K2, IV2))
 
         client_socket.send(bytes("B: Am decriptat!", "utf-8"))
-except KeyboardInterrupt:
-    print("Exited by user.")
+except Exception:
+    print("Something went wrong. Try again!")
 client_socket.close()
