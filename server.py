@@ -282,6 +282,11 @@ while True:
 
             client_socket_A.close()
             client_socket_B.close()
+        else:
+            exit("INCORRECT ENCRYPTION MODE, THE APPLICATION WILL CLOSE NOW.")
+            client_socket_A.close()
+            client_socket_B.close()
+            server_socket.close()
     except Exception:
         print("Something went wrong. Try again!")
 
