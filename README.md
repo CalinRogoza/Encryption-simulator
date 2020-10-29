@@ -18,4 +18,4 @@
     - pip3 install pycryptodome
     - easy_install http://www.voidspace.org.uk/python/pycrypto-2.6.1/pycrypto-2.6.1.win32-py2.7.exe
   </br>
-  Acum puteți lansa aplicația. Rulați în această ordine: **server.py, client_A.py, client_B.py.** Pentru a modifica textul ce se dorește a fi criptat și decriptat, editați fișierul **fisier.txt**.
+  Acum puteți lansa aplicația. Rulați în această ordine: **server.py, client_A.py, client_B.py.** Pentru a modifica textul ce se dorește a fi criptat și decriptat, editați fișierul **fisier.txt** .
