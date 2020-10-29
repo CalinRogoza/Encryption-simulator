@@ -13,5 +13,5 @@
 </br>
 ## Cerințe preliminare
   Pentru a putea folosi aplicația trebuie să:
-  -alo
-  -saa
+  - alo
+  - saa
