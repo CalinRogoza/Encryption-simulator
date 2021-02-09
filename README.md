@@ -1,4 +1,4 @@
-# Tema1-SI
+# Encryption Simulator
 ## Descrierea aplicației
   Această aplicație are rolul de a simula o infrastructură de comunicație ce utilizează criptosistemul AES. Are o arhitectură de tipul client-server, serverul, numit "Key Manager", are scopul de a comunica cu nodurile A și B, iar clienții sunt două noduri (A și B) care vor avea rolul de a cripta un fișier text într-un mod ales (CBC/CFB), respectiv de a decripta în celălalt mod și afișa pe ecran mesajul inițial.</br>
   Diagrama aplicației:</br></br>
